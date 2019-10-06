@@ -1,0 +1,11 @@
+[package]
+name = "transformer"
+version = "0.1.0"
+authors = ["ghosthamlet <ghosthamlet@gmail.com>"]
+edition = "2018"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+failure = "0.1"
+tch = { git = "https://github.com/LaurentMazare/tch-rs" }
