@@ -465,7 +465,7 @@ fn make_std_mask<'a>(c: &'a Context, tgt: &Tensor, pad: usize) -> Tensor {
     tgt_mask
 }
 
-// TODO: use ndarray::try_from(tensor).bitwise_and(...)
+// TODO: use ndarray::try_from(tensor) & ...
 // https://github.com/LaurentMazare/tch-rs/blob/master/src/tensor/mod.rs#L572
 fn tensor_and(a: &Tensor, b: &Tensor) -> Tensor {
     let tmp = Tensor::broadcast_tensors(&[a, b]);
