@@ -1,5 +1,5 @@
 [package]
-name = "transformer"
+name = "transformers-rs"
 version = "0.1.0"
 authors = ["ghosthamlet <ghosthamlet@gmail.com>"]
 edition = "2018"
