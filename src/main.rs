@@ -623,6 +623,8 @@ impl<'a, T> SimpleLossCompute<'a, T> {
             self.opt.as_ref().unwrap().optimizer.zero_grad();
             loss.backward();
             self.opt.as_mut().unwrap().step(step);
+        } else {
+            loss.backward();
         }
 
         // return loss.data[0] * norm;
@@ -649,13 +651,13 @@ fn _train<'a>(c: &'a Context) -> EncoderDecoder<'a> {
         // let c = Context::new(&vs, &p, device, train);
         let criterion = LabelSmoothing::new(V, 0, 0.0);
         let mut model_opt = NoamOpt::new(model.src_embed.0.d_model, 1 as f64, 400 as f64,
-                                     nn::Adam::default().build(c.vs, 5e-1).unwrap());
+                                     nn::Adam::default().build(c.vs, 1e-3).unwrap());
 
         for epoch in 0..10 {
             let mut l = SimpleLossCompute::new(&model.generator, &criterion, Some(&mut model_opt));
+            let mut l2 = SimpleLossCompute::new(&model.generator, &criterion, None as Option<&mut NoamOpt<nn::Adam>>);
             run_epoch(data_gen(&c, V, 30, 20), &model, &mut l);
-            // run_epoch(data_gen(&c, V, 30, 5), &model, 
-            //           SimpleLossCompute::new(&model.generator, &criterion, None as Option<&NoamOpt<nn::Adam>>));
+            run_epoch(data_gen(&c, V, 30, 5), &model, &mut l2);
         }
     // });
 
